@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NYKD Twitter Application</string>
+    <string name="username"><![CDATA[<Username>]]></string>
+    <string name="date"><![CDATA[<Date>]]></string>
+    <string name="text_here"><![CDATA[<Text here>]]></string>
+    <string name="rnm"><![CDATA[<RNM>]]></string>
+    <string name="fnm"><![CDATA[<FNM>]]></string>
+</resources>
