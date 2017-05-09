@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 
 import java.util.List;
 
 /**
- * Created by Yoran Kerbusch on 9-5-2017.
+ * Adapter for a list of tweets, inflating views for use within a ListView. The views consist of ....?
  */
 
 public class TweetListAdapter extends ArrayAdapter<Tweet> {

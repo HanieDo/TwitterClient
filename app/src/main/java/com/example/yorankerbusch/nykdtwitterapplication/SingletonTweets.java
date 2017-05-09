@@ -1,15 +1,17 @@
 package com.example.yorankerbusch.nykdtwitterapplication;
 
+import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Yoran Kerbusch on 9-5-2017.
+ * A Singleton class represents....
  */
 
 public class SingletonTweets {
     private static final SingletonTweets ourInstance = new SingletonTweets();
-    List<Tweet> tweetList;
+    private List<Tweet> tweetList;
 
     private SingletonTweets() {
         tweetList = new ArrayList<>();

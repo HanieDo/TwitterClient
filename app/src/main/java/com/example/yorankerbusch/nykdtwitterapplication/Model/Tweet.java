@@ -1,4 +1,4 @@
-package com.example.yorankerbusch.nykdtwitterapplication;
+package com.example.yorankerbusch.nykdtwitterapplication.Model;
 
 /**
  * Created by Yoran Kerbusch on 9-5-2017.
@@ -6,7 +6,13 @@ package com.example.yorankerbusch.nykdtwitterapplication;
 
 public class Tweet {
     private String userName, date, textContent;
-    private int retweetCount, favouriteCount;
+    private int retweetCount, favouriteCount, inReplyToUserId, statusId;
+    private boolean truncated;
+
+    private TwitterUser user; //or we just use "userName" instead of the User object?
+    private Metadata metadata;
+    private Entities entities;
+
 
     public Tweet (String userName, String date, String textContent, int retweetCount, int favouriteCount) {
         this.userName = userName;

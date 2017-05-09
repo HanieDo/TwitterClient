@@ -6,8 +6,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+/**
+ * Activity that shows a list of tweets (in portrait orientation) or a list of tweets side-by-side
+ * with the profile of the tweep-twitter user (in landscape orientation).
+ */
 public class MainListActivity extends AppCompatActivity {
-    ListView tweetListView;
+    private ListView tweetListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
