@@ -5,18 +5,17 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model;
  */
 
 public class TwitterUser {
-    private int userId,followerCount,followingCount,favoriteCount,statusCount ;
-    private String name,password,description,url;
+    private int userId,followerCount,favoriteCount,statusCount ;
+    private String name,description,url;
+    private String password,followingCount;//exist??
 
-    public TwitterUser(int userId,int followerCount,int followingCount,int favoriteCount,int statusCount,
-                       String name,String password,String description,String url){
+    public TwitterUser(int userId,String name,String description,String url,
+                       int followerCount,int favoriteCount,int statusCount){
         this.userId=userId;
         this.followerCount=followerCount;
-        this.followingCount=followingCount;
         this.favoriteCount=favoriteCount;
         this.statusCount=statusCount;
         this.name=name;
-        this.password=password;
         this.description=description;
         this.url=url;
     }

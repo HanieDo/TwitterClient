@@ -13,18 +13,17 @@ import java.util.ArrayList;
  */
 
 public class Entities {
-    private ArrayList<HashTag> hashTags;
-    private ArrayList<Symbol> symbols;
-    private ArrayList<Url> urls;
-    private ArrayList<UserMention> userMentions;
-    private ArrayList<Media> media;
+    private ArrayList<HashTag> hashTags=new ArrayList<>();
+    private ArrayList<Symbol> symbols=new ArrayList<>();
+    private ArrayList<Url> urls = new ArrayList<>();
+    private ArrayList<UserMention> userMentions = new ArrayList<>();
+    private ArrayList<Media> media; //Exist?
 
-    public Entities(){
-        hashTags=new ArrayList<>();
-        symbols=new ArrayList<>();
-        urls=new ArrayList<>();
-        userMentions=new ArrayList<>();
-        media=new ArrayList<>();
+    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,ArrayList<UserMention> userMentions){
+        this.hashTags=hashTags;
+        this.symbols=symbols;
+        this.urls=urls;
+        this.userMentions=userMentions;
     }
 
     public ArrayList<HashTag> getHashTags() {

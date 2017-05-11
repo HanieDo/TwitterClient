@@ -6,12 +6,14 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar;
 
 public class HashTag {
     private String text;
-    private Integer[] indices=new Integer[2];
+    private Integer[] indices;
 
-    public HashTag(String text, int firstInt, int secondInt){
+    public HashTag(){
+    }
+
+    public HashTag(String text, Integer[] indices){
         this.text=text;
-        indices[1]=firstInt;
-        indices[2]=secondInt;
+        this.indices=indices;
     }
 
     public String getText() {

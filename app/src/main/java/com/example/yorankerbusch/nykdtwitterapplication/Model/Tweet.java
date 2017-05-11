@@ -9,15 +9,29 @@ public class Tweet {
     private int retweetCount, favouriteCount, inReplyToUserId, statusId;
     private boolean truncated;
 
-    private TwitterUser user; //or we just use "userName" instead of the User object?
+    private TwitterUser user;
     private Metadata metadata;
     private Entities entities;
 
+    public Tweet(String userName,String date,String textContent,int retweetCount,int favouriteCount){
+        this.userName=userName;
+        this.date=date;
+        this.textContent=textContent;
+        this.retweetCount=retweetCount;
+        this.favouriteCount=favouriteCount;
+    }
 
-    public Tweet (String userName, String date, String textContent, int retweetCount, int favouriteCount) {
-        this.userName = userName;
+    public Tweet (String date, int statusId,String textContent,boolean truncated, Entities entities,
+                  Metadata metadata,int inReplyToUserId,TwitterUser user,int retweetCount, int favouriteCount) {
+        this.userName = user.getName();
         this.date = date;
+        this.statusId=statusId;
         this.textContent = textContent;
+        this.truncated=truncated;
+        this.entities=entities;
+        this.metadata=metadata;
+        this.inReplyToUserId=inReplyToUserId;
+        this.user=user;
         this.retweetCount = retweetCount;
         this.favouriteCount = favouriteCount;
     }

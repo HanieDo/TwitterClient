@@ -7,12 +7,16 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar;
 public class UserMention {
     private int id;
     private String screenName,name;
-    private Integer[] indices=new Integer[2];
+    private Integer[] indices;
 
-    public UserMention(int id,String screenName,String name,int firstInt, int secondInt){
+    public UserMention(){
+    }
+
+    public UserMention(String screenName,String name,int id,Integer[] indices){
         this.id=id;
-        indices[1]=firstInt;
-        indices[2]=secondInt;
+        this.indices=indices;
+        this.screenName=screenName;
+        this.name=name;
     }
 
     public int getId() {

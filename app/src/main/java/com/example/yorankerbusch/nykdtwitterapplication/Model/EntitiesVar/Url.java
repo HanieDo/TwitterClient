@@ -6,14 +6,16 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar;
 
 public class Url {
     private String url,displayUrl,expandedUrl;
-    private Integer[] indices=new Integer[2];
+    private Integer[] indices;
 
-    public Url(String url,String displayUrl,String expandedUrl, int firstInt, int secondInt){
+    public Url(){
+    }
+
+    public Url(String url,String displayUrl,String expandedUrl, Integer[] indices){
         this.url=url;
         this.displayUrl=displayUrl;
         this.expandedUrl=expandedUrl;
-        indices[1]=firstInt;
-        indices[2]=secondInt;
+        this.indices=indices;
     }
 
     public String getUrl() {
