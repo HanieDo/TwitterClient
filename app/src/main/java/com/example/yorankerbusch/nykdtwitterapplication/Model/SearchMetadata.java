@@ -1,7 +1,7 @@
 package com.example.yorankerbusch.nykdtwitterapplication.Model;
 
 /**
- * Created by LENOVO on 5/9/2017.
+ * A helper class represents "SearchMetadata" tool for a user to...
  */
 
 public class SearchMetadata {

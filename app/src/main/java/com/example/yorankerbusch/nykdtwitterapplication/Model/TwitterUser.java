@@ -1,13 +1,17 @@
 package com.example.yorankerbusch.nykdtwitterapplication.Model;
 
 /**
- * Created by LENOVO on 5/9/2017.
+ * A class represents a Twitter user. A user has an id, a name, description ...
  */
 
 public class TwitterUser {
     private int userId,followerCount,favoriteCount,statusCount ;
     private String name,description,url;
     private String password,followingCount;//exist??
+
+    public TwitterUser(String name){
+        this.name=name;
+    }
 
     public TwitterUser(int userId,String name,String description,String url,
                        int followerCount,int favoriteCount,int statusCount){

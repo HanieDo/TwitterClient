@@ -1,7 +1,7 @@
 package com.example.yorankerbusch.nykdtwitterapplication.Model;
 
 /**
- * Created by LENOVO on 5/9/2017.
+ * A class represents Metadata
  */
 
 public class Metadata {

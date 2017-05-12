@@ -9,7 +9,8 @@ import com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar.UserMe
 import java.util.ArrayList;
 
 /**
- * Created by LENOVO on 5/9/2017.
+ * A class represents Entities. An Entity always has a list of hashtags, symbols, urls and userMentions,
+ * but it sometimes also has a list of media.
  */
 
 public class Entities {
@@ -17,7 +18,7 @@ public class Entities {
     private ArrayList<Symbol> symbols=new ArrayList<>();
     private ArrayList<Url> urls = new ArrayList<>();
     private ArrayList<UserMention> userMentions = new ArrayList<>();
-    private ArrayList<Media> media; //Exist?
+    private ArrayList<Media> media;
 
     public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,ArrayList<UserMention> userMentions){
         this.hashTags=hashTags;

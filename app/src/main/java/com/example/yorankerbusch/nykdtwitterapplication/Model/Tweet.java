@@ -5,7 +5,7 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model;
  */
 
 public class Tweet {
-    private String userName, date, textContent;
+    private String date, textContent;
     private int retweetCount, favouriteCount, inReplyToUserId, statusId;
     private boolean truncated;
 
@@ -13,17 +13,19 @@ public class Tweet {
     private Metadata metadata;
     private Entities entities;
 
-    public Tweet(String userName, String date, String textContent, int retweetCount, int favouriteCount){
-        this.userName = userName;
-        this.date = date;
-        this.textContent = textContent;
-        this.retweetCount = retweetCount;
-        this.favouriteCount = favouriteCount;
+    //Constructor just for displayed information
+    public Tweet(String textContent,String date,int retweetCount,int favouriteCount,TwitterUser user,Metadata metadata){
+        this.textContent=textContent;
+        this.date=date;
+        this.retweetCount=retweetCount;
+        this.favouriteCount=favouriteCount;
+        this.user=user;
+        this.metadata=metadata;
     }
 
+    //Constructor for a fully Tweet
     public Tweet (String date, int statusId, String textContent, boolean truncated, Entities entities,
                   Metadata metadata, int inReplyToUserId, TwitterUser user, int retweetCount, int favouriteCount) {
-        this.userName = user.getName();
         this.date = date;
         this.statusId = statusId;
         this.textContent = textContent;
