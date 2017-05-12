@@ -37,7 +37,7 @@ public class Tweet {
     }
 
     public String getUserName() {
-        return userName;
+        return user.getName();
     }
 
     public String getDate() {

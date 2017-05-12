@@ -39,7 +39,6 @@ public class SingletonTweets {
 
         try {
             InputStream is = context.getAssets().open("output.json");
-
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -206,15 +205,7 @@ public class SingletonTweets {
      */
     private void readIndices(JSONArray indicesJsonArray, Integer[] indices){
         for (int countIndices = 0; countIndices < indicesJsonArray.length(); countIndices++) {
-            JSONObject indicesJson = null;
-
-            try {
-                indicesJson = indicesJsonArray.getJSONObject(countIndices);
-                indices[countIndices] = indicesJson.getInt("1"); //????
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
+                indices[countIndices] = indicesJsonArray.optInt(countIndices);
         }
     }
 
