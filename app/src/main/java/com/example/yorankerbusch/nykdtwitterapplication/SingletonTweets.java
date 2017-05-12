@@ -2,7 +2,6 @@ package com.example.yorankerbusch.nykdtwitterapplication;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Entities;
 import com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar.HashTag;
@@ -23,158 +22,179 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A Singleton class represents....
- */
-
 public class SingletonTweets {
     private static final SingletonTweets ourInstance = new SingletonTweets();
     private List<Tweet> tweetList;
 
-    private SingletonTweets(Context context) {
+    private SingletonTweets() {
         tweetList = new ArrayList<>();
-        loadDummyData();
-
-        //Pass a context to getAssets()
-        AssetManager assetManager=context.getAssets();
-        try {
-            InputStream inputStream=assetManager.open("output.json");
-            loadJSONFromAsset(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void loadDummyData() {
-        tweetList.add(new Tweet("Yoran", "9 May 2017", "Fucking normies, reeeeeee", 21, 69));
-        tweetList.add(new Tweet("Nhi", "8 May 2017", "Hello people, it's ya boii AnomalyXD", 42, 1337));
-        tweetList.add(new Tweet("Martin", "29 June 2016", "Wat is Netherlands", 1, 12));
-        tweetList.add(new Tweet("Wouter", "9 May 2017", "Kek, such hate", 0, 9));
+    public static SingletonTweets getInstance() {
+        return ourInstance;
     }
 
-
-    public void loadJSONFromAsset(InputStream is) {
+    public void loadJSONFromAsset(Context context) {
         String json = null;
+
         try {
+            InputStream is = context.getAssets().open("output.json");
+
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             ex.printStackTrace();
         }
+
         try {
             JSONObject obj = new JSONObject(json);
             JSONArray tweetJsonArray = obj.getJSONArray("statuses");
-            for (int countTweet=0;countTweet<tweetJsonArray.length();countTweet++){
+
+            for (int countTweet = 0; countTweet < tweetJsonArray.length(); countTweet++){
                 //Get tweet Object
-                JSONObject tweetJson=tweetJsonArray.getJSONObject(countTweet);
+                JSONObject tweetJson = tweetJsonArray.getJSONObject(countTweet);
                 //Get entities JSON object
-                JSONObject entitiesJson=tweetJson.getJSONObject("entities");
+                JSONObject entitiesJson = tweetJson.getJSONObject("entities");
 
                 //Get entities components
                 //Hashtag
-                ArrayList<HashTag> hashTags=new ArrayList<>();
-                JSONArray hashTagJsonArray=entitiesJson.getJSONArray("hashtags");
+                ArrayList<HashTag> hashTags = new ArrayList<>();
+                JSONArray hashTagJsonArray = entitiesJson.getJSONArray("hashtags");
+
                 //If no hashtag
-                if (hashTagJsonArray.length()==0){
+                if (hashTagJsonArray.length() == 0){
                     hashTags.add(new HashTag());
-                } else {
+                }
+                else {
                     for (int countHashTag = 0; countHashTag < hashTagJsonArray.length(); countHashTag++) {
                         JSONObject hashTagJson = hashTagJsonArray.getJSONObject(countHashTag);
                         JSONArray indicesJsonArray = hashTagJson.getJSONArray("indices");
                         Integer[] indices = new Integer[2];
+
                         readIndices(indicesJsonArray,indices);
+
                         HashTag hashTag = new HashTag(hashTagJson.getString("text"), indices);
                         hashTags.add(hashTag);
                     }
                 }
+
                 //Symbol
-                ArrayList<Symbol> symbols=new ArrayList<>();
-                JSONArray symbolJsonArray=entitiesJson.getJSONArray("symbols");
-                if (symbolJsonArray.length()==0){
+                ArrayList<Symbol> symbols = new ArrayList<>();
+                JSONArray symbolJsonArray = entitiesJson.getJSONArray("symbols");
+
+                if (symbolJsonArray.length() == 0){
                     symbols.add(new Symbol());
-                } else {
+                }
+                else {
                     for (int countSymbol = 0; countSymbol < hashTagJsonArray.length(); countSymbol++) {
                         JSONObject symbolJson = symbolJsonArray.getJSONObject(countSymbol);
                         JSONArray indicesJsonArray = symbolJson.getJSONArray("indices");
                         Integer[] indices = new Integer[2];
-                        readIndices(indicesJsonArray,indices);
+
+                        readIndices(indicesJsonArray, indices);
+
                         Symbol symbol = new Symbol(symbolJson.getString("text"), indices);
                         symbols.add(symbol);
                     }
                 }
+
                 //UserMention
-                ArrayList<UserMention> userMentions=new ArrayList<>();
-                JSONArray userMentionJsonArray=entitiesJson.getJSONArray("user_mentions");
-                if (userMentionJsonArray.length()==0){
+                ArrayList<UserMention> userMentions = new ArrayList<>();
+                JSONArray userMentionJsonArray = entitiesJson.getJSONArray("user_mentions");
+
+                if (userMentionJsonArray.length() == 0){
                     userMentions.add(new UserMention());
-                } else {
+                }
+                else {
                     for (int countUserMention = 0; countUserMention < userMentionJsonArray.length(); countUserMention++) {
                         JSONObject userMentionJson = userMentionJsonArray.getJSONObject(countUserMention);
                         JSONArray indicesJsonArray = userMentionJson.getJSONArray("indices");
                         Integer[] indices = new Integer[2];
+
                         readIndices(indicesJsonArray,indices);
-                        UserMention userMention= new UserMention(userMentionJson.getString("screen_name"),
+
+                        UserMention userMention = new UserMention(userMentionJson.getString("screen_name"),
                                 userMentionJson.getString("name"),userMentionJson.getInt("id"),indices);
+
                         userMentions.add(userMention);
                     }
                 }
+
                 //URL
-                ArrayList<Url> urls=new ArrayList<>();
-                JSONArray urlJsonArray=entitiesJson.getJSONArray("urls");
-                if (urlJsonArray.length()==0){
+                ArrayList<Url> urls = new ArrayList<>();
+                JSONArray urlJsonArray = entitiesJson.getJSONArray("urls");
+
+                if (urlJsonArray.length() == 0){
                     urls.add(new Url());
-                }else {
+                }
+                else {
                     for (int countURL = 0; countURL < urlJsonArray.length(); countURL++) {
                         JSONObject urlJson = urlJsonArray.getJSONObject(countURL);
                         JSONArray indicesJsonArray = urlJson.getJSONArray("indices");
                         Integer[] indices = new Integer[2];
+
                         readIndices(indicesJsonArray,indices);
-                        Url url=new Url(urlJson.getString("url"),urlJson.getString("display_url"),
+
+                        Url url = new Url(urlJson.getString("url"),urlJson.getString("display_url"),
                                 urlJson.getString("expanded_url"),indices);
+
                         urls.add(url);
                     }
                 }
+
                 //Media ---> Not always have (check 3nd status)
-                ArrayList<Media> mediaList=new ArrayList<>();
-                JSONArray mediaJsonArray=entitiesJson.getJSONArray("media");
-                if (mediaJsonArray.length()==0){
+                ArrayList<Media> mediaList = new ArrayList<>();
+                JSONArray mediaJsonArray = entitiesJson.getJSONArray("media");
+
+                if (mediaJsonArray.length() == 0){
                     mediaList.add(new Media());
-                } else {
+                }
+                else {
                     for (int countMedia = 0; countMedia < mediaJsonArray.length(); countMedia++) {
                         JSONObject mediaJson = mediaJsonArray.getJSONObject(countMedia);
                         JSONArray indicesJsonArray = mediaJson.getJSONArray("indices");
                         Integer[] indices = new Integer[2];
+
                         readIndices(indicesJsonArray,indices);
+
                         Media media=new Media(mediaJson.getInt("id"),indices,mediaJson.getString("media_url"),
                                 mediaJson.getString("media_url_https"),mediaJson.getString("url"),mediaJson.getString("display_url"),
                                 mediaJson.getString("expanded_url"),mediaJson.getString("type"));
+
                         mediaList.add(media);
                     }
                 }
 
                 //Create Entities Object
-                Entities entities=new Entities(hashTags,symbols,urls,userMentions);
-
+                Entities entities = new Entities(hashTags,symbols,urls,userMentions);
                 //Get Metadata JSON object
-                JSONObject metadataJson=tweetJson.getJSONObject("metadata");
+                JSONObject metadataJson = tweetJson.getJSONObject("metadata");
                 //Create Metadata Object
-                Metadata metadata=new Metadata(metadataJson.getString("iso_language_code"),metadataJson.getString("result_type"));
-
+                Metadata metadata = new Metadata(metadataJson.getString("iso_language_code"),metadataJson.getString("result_type"));
                 //Get User JSON object
-                JSONObject userJson=tweetJson.getJSONObject("user");
-                TwitterUser user=new TwitterUser(userJson.getInt("id"),userJson.getString("name"),
-                        userJson.getString("description"),userJson.getString("url"),userJson.getInt("followers_count"),
-                        userJson.getInt("favourites_count"),userJson.getInt("statuses_count"));
+                JSONObject userJson = tweetJson.getJSONObject("user");
 
-                Tweet tweet=new Tweet(tweetJson.getString("created_at"),tweetJson.getInt("id"),
-                        tweetJson.getString("text"),tweetJson.getBoolean("truncated"),entities,metadata,
-                        tweetJson.getInt("in_reply_to_user_id"),user,tweetJson.getInt("retweet_count"),tweetJson.getInt("favorite_count"));
+                TwitterUser user = new TwitterUser(userJson.getInt("id"), userJson.getString("name"),
+                        userJson.getString("description"), userJson.getString("url"), userJson.getInt("followers_count"),
+                        userJson.getInt("favourites_count"), userJson.getInt("statuses_count"));
+
+                //This commented out tweet is a simple version of a tweet, best for testing.
+//                Tweet tweet = new Tweet(user.getName(), tweetJson.getString("created_at"),
+//                        tweetJson.getString("text"), tweetJson.getInt("retweet_count"),
+//                        tweetJson.getInt("favorite_count"));
+
+                Tweet tweet = new Tweet(tweetJson.getString("created_at"), tweetJson.getInt("id"),
+                        tweetJson.getString("text"), tweetJson.getBoolean("truncated"), entities, metadata,
+                        tweetJson.getInt("in_reply_to_user_id"), user, tweetJson.getInt("retweet_count"), tweetJson.getInt("favorite_count"));
+
                 tweetList.add(tweet);
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
     }
@@ -184,20 +204,18 @@ public class SingletonTweets {
      * @param indicesJsonArray A JSON array consists of the indices values
      * @param indices An indices array with two integers representing two positions
      */
-    private void readIndices(JSONArray indicesJsonArray,Integer[] indices){
+    private void readIndices(JSONArray indicesJsonArray, Integer[] indices){
         for (int countIndices = 0; countIndices < indicesJsonArray.length(); countIndices++) {
             JSONObject indicesJson = null;
+
             try {
                 indicesJson = indicesJsonArray.getJSONObject(countIndices);
                 indices[countIndices] = indicesJson.getInt("1"); //????
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static SingletonTweets getInstance() {
-        return ourInstance;
     }
 
     public List<Tweet> getTweetList() {

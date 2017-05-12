@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 
@@ -26,7 +27,7 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
         ViewHolder holder = new ViewHolder();
         Tweet tweet = SingletonTweets.getInstance().getTweetList().get(position);
 
@@ -50,6 +51,13 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
         holder.contentTV.setText(tweet.getTextContent());
         holder.retweetButton.setText("" + tweet.getRetweetCount());
         holder.favouriteButton.setText("" + tweet.getFavouriteCount());
+
+        holder.userNameTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(parent.getContext(), "It's working!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return convertView;
     }
