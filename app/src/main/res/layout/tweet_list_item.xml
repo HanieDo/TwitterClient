@@ -5,7 +5,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/userName_tv"
@@ -32,7 +34,6 @@
             android:id="@+id/content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/retweet_bttn"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/userName_tv"
@@ -42,19 +43,19 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/retweet_bttn"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/favourite_bttn"
-            android:text="@string/rnm" />
-
-        <Button
             android:id="@+id/favourite_bttn"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
+            android:layout_below="@id/content_tv"
             android:text="@string/fnm" />
+
+        <Button
+            android:id="@+id/retweet_bttn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@id/favourite_bttn"
+            android:layout_toEndOf="@+id/favourite_bttn"
+            android:text="@string/rnm" />
     </RelativeLayout>
 </LinearLayout>

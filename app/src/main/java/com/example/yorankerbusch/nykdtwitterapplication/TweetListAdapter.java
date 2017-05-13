@@ -16,10 +16,6 @@ import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 
 import java.util.List;
 
-/**
- * Adapter for a list of tweets, inflating views for use within a ListView. The views consist of ....?
- */
-
 public class TweetListAdapter extends ArrayAdapter<Tweet> {
     public TweetListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Tweet> tweets) {
         super(context, resource, tweets);
@@ -55,6 +51,7 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
         holder.userNameTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: add ability to click username and then viewing that user's account.
                 Toast.makeText(parent.getContext(), "It's working!", Toast.LENGTH_SHORT).show();
             }
         });

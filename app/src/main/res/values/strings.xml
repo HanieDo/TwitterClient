@@ -16,4 +16,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chosen_user_s_name_placeholder"><![CDATA[<Chosen user\'s name placeholder>]]></string>
+    <string name="description_placeholder"><![CDATA[<Description placeholder>]]></string>
+    <string name="fc"><![CDATA[<FC#>]]></string>
+    <string name="fv"><![CDATA[<FV#>]]></string>
+    <string name="st"><![CDATA[<ST#>]]></string>
 </resources>
