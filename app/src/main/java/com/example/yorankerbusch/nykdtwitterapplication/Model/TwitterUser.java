@@ -37,6 +37,18 @@ public class TwitterUser {
         return description;
     }
 
+    public int getFavoriteCount() {
+        return favoriteCount;
+    }
+
+    public int getFollowerCount() {
+        return followerCount;
+    }
+
+    public int getStatusCount() {
+        return statusCount;
+    }
+
     public boolean checkUserName(String anotherName){
         return anotherName.equals(this.name);
     }

@@ -11,13 +11,16 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener/*, TweetListStartFragment.OnFragmentInteractionListener*/ {
-    private String currentFragment = "NULL";
-    private final String TWITTER_HOME_FRAGMENT = "HOME FRAGMENT";
-    private final String SEARCH_FRAGMENT = "SEARCH FRAGMENT";
-    private final String MY_TIMELINE_FRAGMENT = "MY TIMELINE FRAGMENT";
-    private final String SETTINGS_FRAGMENT = "SETTINGS FRAGMENT";
-    private final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
+public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
+    public static final String REQUESTED_USER = "GIVEN USER";
+
+    private static String currentFragment = "NULL";
+    private static final String TWITTER_HOME_FRAGMENT = "HOME FRAGMENT";
+    private static final String SEARCH_FRAGMENT = "SEARCH FRAGMENT";
+    private static final String MY_TIMELINE_FRAGMENT = "MY TIMELINE FRAGMENT";
+    private static final String OTHER_TIMELINE_FRAGMENT = "OTHER TIMELINE FRAGMENT";
+    private static final String SETTINGS_FRAGMENT = "SETTINGS FRAGMENT";
+    private static final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
 
     private TweetListStartFragment tweetListStartFragment;
     private FrameLayout tweetListFrameLayout;
@@ -71,6 +74,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
                 //Do nothing, as the home fragment is already on the screen and the app will crash.
             } else {
                 getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
+                currentFragment = TWITTER_HOME_FRAGMENT;
             }
         } else if (id == R.id.nav_search) {
             if (currentFragment.equals(SEARCH_FRAGMENT)) {
@@ -85,6 +89,9 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
                 //Do nothing, as the my timeline fragment is already on the screen and the app will crash.
             } else {
                 //TODO: Replace the current fragment with the my timeline fragment
+                //Add bundles to send the current logged in user's data to the user page fragment.
+//                UserPageFragment userPageFragment = new UserPageFragment();
+//                getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), userPageFragment).commit();
             }
 
             Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
@@ -116,8 +123,15 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
-//    @Override
-//    public void onFragmentInteraction() {
-//        //...
-//    }
+    @Override
+    public void onFragmentInteraction(String userName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(REQUESTED_USER, userName);
+
+        UserPageFragment userPageFragment = new UserPageFragment();
+        userPageFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), userPageFragment).commit();
+        currentFragment = OTHER_TIMELINE_FRAGMENT;
+    }
 }

@@ -48,13 +48,13 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
         holder.retweetButton.setText("" + tweet.getRetweetCount());
         holder.favouriteButton.setText("" + tweet.getFavouriteCount());
 
-        holder.userNameTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: add ability to click username and then viewing that user's account.
-                Toast.makeText(parent.getContext(), "It's working!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.userNameTV.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO: add ability to click username and then viewing that user's account.
+//                Toast.makeText(parent.getContext(), "It's working!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         return convertView;
     }

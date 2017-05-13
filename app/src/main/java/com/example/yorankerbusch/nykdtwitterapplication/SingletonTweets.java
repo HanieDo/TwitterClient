@@ -26,9 +26,11 @@ import java.util.Scanner;
 public class SingletonTweets {
     private static final SingletonTweets ourInstance = new SingletonTweets();
     private List<Tweet> tweetList;
+    private List<TwitterUser> twitterUserList;
 
     private SingletonTweets() {
         tweetList = new ArrayList<>();
+        twitterUserList = new ArrayList<>();
     }
 
     public static SingletonTweets getInstance() {
@@ -186,7 +188,8 @@ public class SingletonTweets {
                 //Create Metadata Object
                 Metadata metadata = new Metadata(metadataJson.getString("iso_language_code"),metadataJson.getString("result_type"));
 
-                //Update the list
+                //Update the lists
+                twitterUserList.add(user);
                 tweetList.add(new Tweet(status, date, retweet, favorite, user, metadata));
             }
         }
@@ -211,5 +214,19 @@ public class SingletonTweets {
 
     public List<Tweet> getTweetList() {
         return tweetList;
+    }
+
+    public TwitterUser getSpecificTwitterUser(String userName) {
+        for (TwitterUser user : twitterUserList) {
+            if (user.getName().equals(userName)) {
+                return user;
+            }
+        }
+
+        throw new RuntimeException("User not found - User with username does not exist!");
+    }
+
+    public List<TwitterUser> getTwitterUserList() {
+        return twitterUserList;
     }
 }
