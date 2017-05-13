@@ -14,13 +14,14 @@ public class Tweet {
     private Entities entities;
 
     //Constructor just for displayed information
-    public Tweet(String textContent,String date,int retweetCount,int favouriteCount,TwitterUser user,Metadata metadata){
+    public Tweet(String textContent,String date,int retweetCount,int favouriteCount,TwitterUser user,Metadata metadata,Entities entities){
         this.textContent=textContent;
         this.date=date;
         this.retweetCount=retweetCount;
         this.favouriteCount=favouriteCount;
         this.user=user;
         this.metadata=metadata;
+        this.entities=entities;
     }
 
     //Constructor for a fully Tweet

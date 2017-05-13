@@ -69,94 +69,94 @@ public class SingletonTweets {
                 int statusCount = userJson.getInt("statuses_count");
                 TwitterUser user = new TwitterUser(id,userName,description,urlUser,followersCount,favoritesCount,statusCount);
 
-//                //Get entities JSON object
-//                JSONObject entitiesJson = tweetJson.getJSONObject("entities");
+                //Get entities JSON object
+                JSONObject entitiesJson = tweetJson.getJSONObject("entities");
+
+                //Get entities components
+                //Hashtag
+                ArrayList<HashTag> hashTags = new ArrayList<>();
+                JSONArray hashTagJsonArray = entitiesJson.getJSONArray("hashtags");
 //
-//                //Get entities components
-//                //Hashtag
-//                ArrayList<HashTag> hashTags = new ArrayList<>();
-//                JSONArray hashTagJsonArray = entitiesJson.getJSONArray("hashtags");
-//
-//                //If no hashtag
-//                if (hashTagJsonArray.length() == 0){
-//                    hashTags.add(new HashTag());
-//                }
-//                else {
-//                    for (int countHashTag = 0; countHashTag < hashTagJsonArray.length(); countHashTag++) {
-//                        JSONObject hashTagJson = hashTagJsonArray.getJSONObject(countHashTag);
-//                        JSONArray indicesJsonArray = hashTagJson.getJSONArray("indices");
-//                        Integer[] indices = new Integer[2];
-//
-//                        readIndices(indicesJsonArray,indices);
-//
-//                        HashTag hashTag = new HashTag(hashTagJson.getString("text"), indices);
-//                        hashTags.add(hashTag);
-//                    }
-//                }
-//
-//                //Symbol
-//                ArrayList<Symbol> symbols = new ArrayList<>();
-//                JSONArray symbolJsonArray = entitiesJson.getJSONArray("symbols");
-//
-//                if (symbolJsonArray.length() == 0){
-//                    symbols.add(new Symbol());
-//                }
-//                else {
-//                    for (int countSymbol = 0; countSymbol < hashTagJsonArray.length(); countSymbol++) {
-//                        JSONObject symbolJson = symbolJsonArray.getJSONObject(countSymbol);
-//                        JSONArray indicesJsonArray = symbolJson.getJSONArray("indices");
-//                        Integer[] indices = new Integer[2];
-//
-//                        readIndices(indicesJsonArray, indices);
-//
-//                        Symbol symbol = new Symbol(symbolJson.getString("text"), indices);
-//                        symbols.add(symbol);
-//                    }
-//                }
-//
-//                //UserMention
-//                ArrayList<UserMention> userMentions = new ArrayList<>();
-//                JSONArray userMentionJsonArray = entitiesJson.getJSONArray("user_mentions");
-//
-//                if (userMentionJsonArray.length() == 0){
-//                    userMentions.add(new UserMention());
-//                }
-//                else {
-//                    for (int countUserMention = 0; countUserMention < userMentionJsonArray.length(); countUserMention++) {
-//                        JSONObject userMentionJson = userMentionJsonArray.getJSONObject(countUserMention);
-//                        JSONArray indicesJsonArray = userMentionJson.getJSONArray("indices");
-//                        Integer[] indices = new Integer[2];
-//
-//                        readIndices(indicesJsonArray,indices);
-//
-//                        UserMention userMention = new UserMention(userMentionJson.getString("screen_name"),
-//                                userMentionJson.getString("name"),userMentionJson.getInt("id"),indices);
-//
-//                        userMentions.add(userMention);
-//                    }
-//                }
-//
-//                //URL
-//                ArrayList<Url> urls = new ArrayList<>();
-//                JSONArray urlJsonArray = entitiesJson.getJSONArray("urls");
-//
-//                if (urlJsonArray.length() == 0){
-//                    urls.add(new Url());
-//                }
-//                else {
-//                    for (int countURL = 0; countURL < urlJsonArray.length(); countURL++) {
-//                        JSONObject urlJson = urlJsonArray.getJSONObject(countURL);
-//                        JSONArray indicesJsonArray = urlJson.getJSONArray("indices");
-//                        Integer[] indices = new Integer[2];
-//
-//                        readIndices(indicesJsonArray,indices);
-//
-//                        Url url = new Url(urlJson.getString("url"),urlJson.getString("display_url"),
-//                                urlJson.getString("expanded_url"),indices);
-//
-//                        urls.add(url);
-//                    }
-//                }
+                //If no hashtag
+                if (hashTagJsonArray.length() == 0){
+                    hashTags.add(new HashTag());
+                }
+                else {
+                    for (int countHashTag = 0; countHashTag < hashTagJsonArray.length(); countHashTag++) {
+                        JSONObject hashTagJson = hashTagJsonArray.getJSONObject(countHashTag);
+                        JSONArray indicesJsonArray = hashTagJson.getJSONArray("indices");
+                        Integer[] indices = new Integer[2];
+
+                        readIndices(indicesJsonArray,indices);
+
+                        HashTag hashTag = new HashTag(hashTagJson.getString("text"), indices);
+                        hashTags.add(hashTag);
+                    }
+                }
+
+                //Symbol
+                ArrayList<Symbol> symbols = new ArrayList<>();
+                JSONArray symbolJsonArray = entitiesJson.getJSONArray("symbols");
+
+                if (symbolJsonArray.length() == 0){
+                    symbols.add(new Symbol());
+                }
+                else {
+                    for (int countSymbol = 0; countSymbol < hashTagJsonArray.length(); countSymbol++) {
+                        JSONObject symbolJson = symbolJsonArray.getJSONObject(countSymbol);
+                        JSONArray indicesJsonArray = symbolJson.getJSONArray("indices");
+                        Integer[] indices = new Integer[2];
+
+                        readIndices(indicesJsonArray, indices);
+
+                        Symbol symbol = new Symbol(symbolJson.getString("text"), indices);
+                        symbols.add(symbol);
+                    }
+                }
+
+                //UserMention
+                ArrayList<UserMention> userMentions = new ArrayList<>();
+                JSONArray userMentionJsonArray = entitiesJson.getJSONArray("user_mentions");
+
+                if (userMentionJsonArray.length() == 0){
+                    userMentions.add(new UserMention());
+                }
+                else {
+                    for (int countUserMention = 0; countUserMention < userMentionJsonArray.length(); countUserMention++) {
+                        JSONObject userMentionJson = userMentionJsonArray.getJSONObject(countUserMention);
+                        JSONArray indicesJsonArray = userMentionJson.getJSONArray("indices");
+                        Integer[] indices = new Integer[2];
+
+                        readIndices(indicesJsonArray,indices);
+
+                        UserMention userMention = new UserMention(userMentionJson.getString("screen_name"),
+                                userMentionJson.getString("name"),userMentionJson.getInt("id"),indices);
+
+                        userMentions.add(userMention);
+                    }
+                }
+
+                //URL
+                ArrayList<Url> urls = new ArrayList<>();
+                JSONArray urlJsonArray = entitiesJson.getJSONArray("urls");
+
+                if (urlJsonArray.length() == 0){
+                    urls.add(new Url());
+                }
+                else {
+                    for (int countURL = 0; countURL < urlJsonArray.length(); countURL++) {
+                        JSONObject urlJson = urlJsonArray.getJSONObject(countURL);
+                        JSONArray indicesJsonArray = urlJson.getJSONArray("indices");
+                        Integer[] indices = new Integer[2];
+
+                        readIndices(indicesJsonArray,indices);
+
+                        Url url = new Url(urlJson.getString("url"),urlJson.getString("display_url"),
+                                urlJson.getString("expanded_url"),indices);
+
+                        urls.add(url);
+                    }
+                }
 //
 //                //Media ---> Not always have (check 3nd status)
 //                ArrayList<Media> mediaList = new ArrayList<>();
@@ -180,8 +180,8 @@ public class SingletonTweets {
 //                        mediaList.add(media);
 //                    }
 //                }
-//                //Create Entities Object
-//                Entities entities = new Entities(hashTags,symbols,urls,userMentions);
+                //Create Entities Object
+                Entities entities = new Entities(hashTags,symbols,urls,userMentions);
 
                 //Get Metadata JSON object
                 JSONObject metadataJson = tweetJson.getJSONObject("metadata");
@@ -190,7 +190,7 @@ public class SingletonTweets {
 
                 //Update the lists
                 twitterUserList.add(user);
-                tweetList.add(new Tweet(status, date, retweet, favorite, user, metadata));
+                tweetList.add(new Tweet(status, date, retweet, favorite, user, metadata,entities));
             }
         }
         catch (JSONException e) {
