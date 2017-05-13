@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
+    private String currentFragment = "NULL";
+    private final String TWITTER_HOME_FRAGMENT = "HOME";
+
     private TweetListStartFragment tweetListStartFragment;
     private FrameLayout tweetListFrameLayout;
 
@@ -22,6 +25,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
         tweetListStartFragment = (TweetListStartFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_tweet_list);
         tweetListFrameLayout = (FrameLayout) findViewById(R.id.fl_list_fragment);
+        currentFragment = TWITTER_HOME_FRAGMENT;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -59,7 +64,12 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         int id = item.getItemId();
 
         if (id == R.id.nav_twitter_home) {
-            Toast.makeText(this, "Twitter home placeholder", Toast.LENGTH_SHORT).show();
+            if (currentFragment == TWITTER_HOME_FRAGMENT) {
+                //Do nothing, as the home fragment is already on the screen and the app will crash.
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
+            }
         }
         else if (id == R.id.nav_search) {
             Toast.makeText(this, "Twitter search placeholder", Toast.LENGTH_SHORT).show();
