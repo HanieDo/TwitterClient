@@ -157,31 +157,36 @@ public class SingletonTweets {
                         urls.add(url);
                     }
                 }
-//
-//                //Media ---> Not always have (check 3nd status)
-//                ArrayList<Media> mediaList = new ArrayList<>();
-//                JSONArray mediaJsonArray = entitiesJson.getJSONArray("media");
-//
-//                if (mediaJsonArray.length() == 0){
-//                    mediaList.add(new Media());
-//                }
-//                else {
-//                    for (int countMedia = 0; countMedia < mediaJsonArray.length(); countMedia++) {
-//                        JSONObject mediaJson = mediaJsonArray.getJSONObject(countMedia);
-//                        JSONArray indicesJsonArray = mediaJson.getJSONArray("indices");
-//                        Integer[] indices = new Integer[2];
-//
-//                        readIndices(indicesJsonArray,indices);
-//
-//                        Media media=new Media(mediaJson.getInt("id"),indices,mediaJson.getString("media_url"),
-//                                mediaJson.getString("media_url_https"),mediaJson.getString("url"),mediaJson.getString("display_url"),
-//                                mediaJson.getString("expanded_url"),mediaJson.getString("type"));
-//
-//                        mediaList.add(media);
-//                    }
-//                }
-                //Create Entities Object
-                Entities entities = new Entities(hashTags,symbols,urls,userMentions);
+
+                Entities entities;
+                //A JSON's Entities does not always has Media key value. First check if the key exists...
+                if (entitiesJson.has("media")) {
+                    ArrayList<Media> mediaList = new ArrayList<>();
+                    JSONArray mediaJsonArray = entitiesJson.getJSONArray("media");
+
+                    if (mediaJsonArray.length() == 0) {
+                        mediaList.add(new Media());
+                    } else {
+                        for (int countMedia = 0; countMedia < mediaJsonArray.length(); countMedia++) {
+                            JSONObject mediaJson = mediaJsonArray.getJSONObject(countMedia);
+                            JSONArray indicesJsonArray = mediaJson.getJSONArray("indices");
+                            Integer[] indices = new Integer[2];
+
+                            readIndices(indicesJsonArray, indices);
+
+                            Media media = new Media(mediaJson.getInt("id"), indices, mediaJson.getString("media_url"),
+                                    mediaJson.getString("media_url_https"), mediaJson.getString("url"), mediaJson.getString("display_url"),
+                                    mediaJson.getString("expanded_url"), mediaJson.getString("type"));
+
+                            mediaList.add(media);
+                        }
+                    }
+                    //Create Entities Object
+                    entities = new Entities(hashTags,symbols,urls,userMentions,mediaList);
+                } else {
+                    //Create Entities Object (without Media)
+                    entities = new Entities(hashTags, symbols, urls, userMentions);
+                }
 
                 //Get Metadata JSON object
                 JSONObject metadataJson = tweetJson.getJSONObject("metadata");

@@ -20,6 +20,7 @@ public class Entities {
     private ArrayList<UserMention> userMentions = new ArrayList<>();
     private ArrayList<Media> media;
 
+    //A Tweet does not always has Media values.
     public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,ArrayList<UserMention> userMentions){
         this.hashTags=hashTags;
         this.symbols=symbols;
@@ -27,6 +28,22 @@ public class Entities {
         this.userMentions=userMentions;
     }
 
+    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,
+                    ArrayList<UserMention> userMentions,ArrayList<Media> media){
+        this.hashTags=hashTags;
+        this.symbols=symbols;
+        this.urls=urls;
+        this.userMentions=userMentions;
+        this.media=media;
+    }
+
+    //Used for checking Entities value
+//    public String getHashTagCheck(){
+//        if (media.size()==0){
+//            return "Noo";
+//        }
+//        return media.get(0).getType();
+//    }
     public ArrayList<HashTag> getHashTags() {
         return hashTags;
     }

@@ -41,7 +41,12 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        //Used for checking Entities value
+//        if (position==2){
+//            holder.userNameTV.setText(tweet.getEntities().getHashTagCheck());
+//        } else {
         holder.userNameTV.setText(tweet.getUserName());
+//    }
         holder.dateTV.setText(tweet.getDate());
         holder.contentTV.setText(tweet.getTextContent());
         holder.retweetButton.setText("" + tweet.getRetweetCount());

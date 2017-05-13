@@ -39,6 +39,10 @@ public class Tweet {
         this.favouriteCount = favouriteCount;
     }
 
+    public Entities getEntities() {
+        return entities;
+    }
+
     public String getUserName() {
         return user.getName();
     }

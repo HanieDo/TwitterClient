@@ -20,6 +20,6 @@ public class HashTag {
         return text;
     }
     public int getHashTagLength(){
-        return indices[2]-indices[1];
+        return indices[1]-indices[0]-1;//minus the "#" sign.
     }
 }
