@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 
@@ -51,7 +50,6 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
 //        holder.userNameTV.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                //TODO: add ability to click username and then viewing that user's account.
 //                Toast.makeText(parent.getContext(), "It's working!", Toast.LENGTH_SHORT).show();
 //            }
 //        });
