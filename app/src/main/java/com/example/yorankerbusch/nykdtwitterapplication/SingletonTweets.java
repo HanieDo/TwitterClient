@@ -40,6 +40,7 @@ public class SingletonTweets {
             InputStream is = context.getAssets().open("output.json");
             Scanner scanner = new Scanner(is);
             StringBuilder builder = new StringBuilder();
+
             while (scanner.hasNextLine()){
                 builder.append(scanner.nextLine());
             }
@@ -50,21 +51,21 @@ public class SingletonTweets {
             for (int countTweet = 0; countTweet < tweetJsonArray.length(); countTweet++){
                 //Get Tweet Object
                 JSONObject tweetJson = tweetJsonArray.getJSONObject(countTweet);
-                String status=tweetJson.getString("text");
-                String date=tweetJson.getString("created_at");
-                int retweet=tweetJson.getInt("retweet_count");
-                int favorite=tweetJson.getInt("favorite_count");
+                String status = tweetJson.getString("text");
+                String date = tweetJson.getString("created_at");
+                int retweet = tweetJson.getInt("retweet_count");
+                int favorite = tweetJson.getInt("favorite_count");
 
                 //Get User JSON object
                 JSONObject userJson = tweetJson.getJSONObject("user");
-                String userName=userJson.getString("name");
-                int id=userJson.getInt("id");
-                String description=userJson.getString("description");
-                String urlUser=userJson.getString("url");
-                int followersCount=userJson.getInt("followers_count");
-                int favoritesCount=userJson.getInt("favourites_count");
-                int statusCount=userJson.getInt("statuses_count");
-                TwitterUser user=new TwitterUser(id,userName,description,urlUser,followersCount,favoritesCount,statusCount);
+                String userName = userJson.getString("name");
+                int id = userJson.getInt("id");
+                String description = userJson.getString("description");
+                String urlUser = userJson.getString("url");
+                int followersCount = userJson.getInt("followers_count");
+                int favoritesCount = userJson.getInt("favourites_count");
+                int statusCount = userJson.getInt("statuses_count");
+                TwitterUser user = new TwitterUser(id,userName,description,urlUser,followersCount,favoritesCount,statusCount);
 
 //                //Get entities JSON object
 //                JSONObject entitiesJson = tweetJson.getJSONObject("entities");
@@ -186,12 +187,13 @@ public class SingletonTweets {
                 Metadata metadata = new Metadata(metadataJson.getString("iso_language_code"),metadataJson.getString("result_type"));
 
                 //Update the list
-                tweetList.add(new Tweet(status,date,retweet,favorite,user,metadata));
+                tweetList.add(new Tweet(status, date, retweet, favorite, user, metadata));
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

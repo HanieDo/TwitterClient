@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_twitter_home"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="Twitter home" />
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="Search" />
+    </group>
+
+    <item android:title="My account">
+        <menu>
+            <item
+                android:id="@+id/nav_my_timeline"
+                android:icon="@android:drawable/ic_menu_my_calendar"
+                android:title="My timeline" />
+            <item
+                android:id="@+id/nav_log_out"
+                android:icon="@android:drawable/ic_menu_revert"
+                android:title="Log out" />
+        </menu>
+    </item>
+
+    <item android:title="Application">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="About" />
+        </menu>
+    </item>
+</menu>
