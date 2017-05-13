@@ -11,9 +11,13 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
+public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener/*, TweetListStartFragment.OnFragmentInteractionListener*/ {
     private String currentFragment = "NULL";
-    private final String TWITTER_HOME_FRAGMENT = "HOME";
+    private final String TWITTER_HOME_FRAGMENT = "HOME FRAGMENT";
+    private final String SEARCH_FRAGMENT = "SEARCH FRAGMENT";
+    private final String MY_TIMELINE_FRAGMENT = "MY TIMELINE FRAGMENT";
+    private final String SETTINGS_FRAGMENT = "SETTINGS FRAGMENT";
+    private final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
 
     private TweetListStartFragment tweetListStartFragment;
     private FrameLayout tweetListFrameLayout;
@@ -47,8 +51,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -64,27 +67,47 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         int id = item.getItemId();
 
         if (id == R.id.nav_twitter_home) {
-            if (currentFragment == TWITTER_HOME_FRAGMENT) {
+            if (currentFragment.equals(TWITTER_HOME_FRAGMENT)) {
                 //Do nothing, as the home fragment is already on the screen and the app will crash.
-            }
-            else {
+            } else {
                 getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
             }
-        }
-        else if (id == R.id.nav_search) {
-            Toast.makeText(this, "Twitter search placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_my_timeline) {
-            Toast.makeText(this, "My timeline placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_log_out) {
-            Toast.makeText(this, "Twitter log out placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Twitter settings placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_about) {
-            Toast.makeText(this, "About Twitter placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_search) {
+            if (currentFragment.equals(SEARCH_FRAGMENT)) {
+                //Do nothing, as the search fragment is already on the screen and the app will crash.
+            } else {
+                //TODO: Replace the current fragment with the search fragment
+            }
+
+            Toast.makeText(this, "Twitter search menu option placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_my_timeline) {
+            if (currentFragment.equals(MY_TIMELINE_FRAGMENT)) {
+                //Do nothing, as the my timeline fragment is already on the screen and the app will crash.
+            } else {
+                //TODO: Replace the current fragment with the my timeline fragment
+            }
+
+            Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_log_out) {
+            //TODO: Login and logout feature.
+
+            Toast.makeText(this, "Twitter log out feature placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_settings) {
+            if (currentFragment.equals(SETTINGS_FRAGMENT)) {
+                //Do nothing, as the settings fragment is already on the screen and the app will crash.
+            } else {
+                //TODO: Replace the current fragment with the settings fragment
+            }
+
+            Toast.makeText(this, "Twitter settings menu option placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_about) {
+            if (currentFragment.equals(ABOUT_FRAGMENT)) {
+                //Do nothing, as the about fragment is already on the screen and the app will crash.
+            } else {
+                //TODO: Replace the current fragment with the about fragment
+            }
+
+            Toast.makeText(this, "About Twitter menu option placeholder", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,8 +116,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
-    @Override
-    public void onFragmentInteraction() {
-        //...
-    }
+//    @Override
+//    public void onFragmentInteraction() {
+//        //...
+//    }
 }
