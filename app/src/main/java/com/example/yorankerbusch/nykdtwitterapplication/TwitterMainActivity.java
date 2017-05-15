@@ -22,7 +22,6 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private static final String SETTINGS_FRAGMENT = "SETTINGS FRAGMENT";
     private static final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
 
-    private TweetListStartFragment tweetListStartFragment;
     private FrameLayout tweetListFrameLayout;
 
     @Override
@@ -30,8 +29,9 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tweetListStartFragment = (TweetListStartFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_tweet_list);
+        TweetListStartFragment tweetListStartFragment = new TweetListStartFragment();
         tweetListFrameLayout = (FrameLayout) findViewById(R.id.fl_list_fragment);
+        getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
         currentFragment = TWITTER_HOME_FRAGMENT;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,6 +73,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             if (currentFragment.equals(TWITTER_HOME_FRAGMENT)) {
                 //Do nothing, as the home fragment is already on the screen and the app will crash.
             } else {
+                TweetListStartFragment tweetListStartFragment = new TweetListStartFragment();
                 getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
                 currentFragment = TWITTER_HOME_FRAGMENT;
             }

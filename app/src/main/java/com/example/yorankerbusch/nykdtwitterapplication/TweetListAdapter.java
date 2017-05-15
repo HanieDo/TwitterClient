@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 
@@ -52,6 +53,7 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
         holder.retweetButton.setText("" + tweet.getRetweetCount());
         holder.favouriteButton.setText("" + tweet.getFavouriteCount());
 
+        //Start for making things within individual list items clickable.
 //        holder.userNameTV.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -60,11 +62,6 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
 //        });
 
         return convertView;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
     }
 
     public class ViewHolder {

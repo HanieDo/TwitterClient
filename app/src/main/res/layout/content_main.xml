@@ -15,11 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/fragment_tweet_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.example.yorankerbusch.nykdtwitterapplication.TweetListStartFragment"
-            tools:layout="@layout/fragment_tweet_list_start"/>
+        <!--...-->
     </FrameLayout>
 </RelativeLayout>

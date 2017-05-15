@@ -24,9 +24,6 @@ public class TweetListStartFragment extends Fragment {
         tweetListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: I have tested with toasts, but for some reason the app can't reach this
-                //TODO     onClickListener. I have no clue why, could you check this? I feel like I'm
-                //TODO     looking right over something xD
                 String requestedUserName = tweetListAdapter.getItem(position).getUserName();
 
                 mListener.onFragmentInteraction(requestedUserName);

@@ -35,7 +35,6 @@ public class UserPageFragment extends Fragment {
             favoritesCountUser.setText(requestedUser.getFavoriteCount() + " Faves");
             statusesCountUser.setText(requestedUser.getStatusCount() + " Tweets");
 
-            //TODO: find a way to only show the tweets of the user that this account belongs to.
             TweetListAdapter tweetListAdapter = new TweetListAdapter(rootView.getContext(), R.layout.tweet_list_item, SingletonTweets.getInstance().getTweetList());
             userTweetsListView.setAdapter(tweetListAdapter);
         }

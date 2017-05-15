@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:clickable="true"
             android:text="@string/username"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -48,7 +48,8 @@
             android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_below="@id/content_tv"
-            android:text="@string/fnm" />
+            android:text="@string/fnm"
+            android:focusable="false"/>
 
         <Button
             android:id="@+id/retweet_bttn"
@@ -56,6 +57,7 @@
             android:layout_height="35dp"
             android:layout_alignBottom="@id/favourite_bttn"
             android:layout_toEndOf="@+id/favourite_bttn"
-            android:text="@string/rnm" />
+            android:text="@string/rnm"
+            android:focusable="false"/>
     </RelativeLayout>
 </LinearLayout>
