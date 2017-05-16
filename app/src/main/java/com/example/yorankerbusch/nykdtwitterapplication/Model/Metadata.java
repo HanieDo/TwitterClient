@@ -7,8 +7,8 @@ package com.example.yorankerbusch.nykdtwitterapplication.Model;
 public class Metadata {
     private String isoLanguageCode, resultType;
 
-    public Metadata(String isoLanguageCode,String resultType){
-        this.isoLanguageCode=isoLanguageCode;
-        this. resultType=resultType;
+    public Metadata(String isoLanguageCode, String resultType) {
+        this.isoLanguageCode = isoLanguageCode;
+        this.resultType = resultType;
     }
 }

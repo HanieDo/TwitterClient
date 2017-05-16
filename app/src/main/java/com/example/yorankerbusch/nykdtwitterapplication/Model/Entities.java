@@ -14,27 +14,27 @@ import java.util.ArrayList;
  */
 
 public class Entities {
-    private ArrayList<HashTag> hashTags=new ArrayList<>();
-    private ArrayList<Symbol> symbols=new ArrayList<>();
+    private ArrayList<HashTag> hashTags = new ArrayList<>();
+    private ArrayList<Symbol> symbols = new ArrayList<>();
     private ArrayList<Url> urls = new ArrayList<>();
     private ArrayList<UserMention> userMentions = new ArrayList<>();
     private ArrayList<Media> media;
 
     //A Tweet does not always has Media values.
-    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,ArrayList<UserMention> userMentions){
-        this.hashTags=hashTags;
-        this.symbols=symbols;
-        this.urls=urls;
-        this.userMentions=userMentions;
+    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols, ArrayList<Url> urls, ArrayList<UserMention> userMentions) {
+        this.hashTags = hashTags;
+        this.symbols = symbols;
+        this.urls = urls;
+        this.userMentions = userMentions;
     }
 
-    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols,ArrayList<Url> urls,
-                    ArrayList<UserMention> userMentions,ArrayList<Media> media){
-        this.hashTags=hashTags;
-        this.symbols=symbols;
-        this.urls=urls;
-        this.userMentions=userMentions;
-        this.media=media;
+    public Entities(ArrayList<HashTag> hashTags, ArrayList<Symbol> symbols, ArrayList<Url> urls,
+                    ArrayList<UserMention> userMentions, ArrayList<Media> media) {
+        this.hashTags = hashTags;
+        this.symbols = symbols;
+        this.urls = urls;
+        this.userMentions = userMentions;
+        this.media = media;
     }
 
     //Used for checking Entities value
@@ -47,15 +47,19 @@ public class Entities {
     public ArrayList<HashTag> getHashTags() {
         return hashTags;
     }
+
     public ArrayList<Symbol> getSymbols() {
         return symbols;
     }
+
     public ArrayList<Url> getUrls() {
         return urls;
     }
+
     public ArrayList<UserMention> getUserMentions() {
         return userMentions;
     }
+
     public ArrayList<Media> getMedia() {
         return media;
     }

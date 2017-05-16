@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.yorankerbusch.nykdtwitterapplication.fragments.TweetListStartFragment;
+import com.example.yorankerbusch.nykdtwitterapplication.fragments.UserPageFragment;
+
 public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
     public static final String REQUESTED_USER = "GIVEN USER";
 
@@ -37,6 +40,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //TODO: Find a better place for this, so that switching between layout modes doesn't add the tweet
+        //TODO:  list to the list again.
         SingletonTweets.getInstance().loadJSONFromAsset(getApplicationContext());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,6 +53,10 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Method to handle when the navigation drawer button has been pressed (which occupies the
+     * back button's space)
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,11 +68,23 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         }
     }
 
+    /**
+     * Method that sets the exact menu item from the nav drawer that has been clicked by the user.
+     *
+     * @param item is the menu item clicked, telling the rest of the system what to do.
+     * @return a super.onOptionsItemSelected(item) call.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method that handles what the app should do when one of the nav drawer's items has been clicked.
+     *
+     * @param item is the clicked item.
+     * @return true to let the system know it has done the handling, failed or not.
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -124,6 +145,11 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
+    /**
+     * Required method from the TweetListStartFragment to handle when a list item has been clicked.
+     *
+     * @param userName is the name of the person who wrote the tweet that was clicked.
+     */
     @Override
     public void onFragmentInteraction(String userName) {
         Bundle bundle = new Bundle();
