@@ -21,6 +21,14 @@ public class Media {
         this.type = type;
     }
 
+    public String getMediaURLHTTPS() {
+        return mediaURLHTTPS;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     public int getId() {
         return id;
     }
