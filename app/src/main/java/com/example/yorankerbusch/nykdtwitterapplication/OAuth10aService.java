@@ -12,7 +12,7 @@ public class OAuth10aService extends com.github.scribejava.core.oauth.OAuth10aSe
     private static OAuth10aService singleton=null;
     public static OAuth10aService getInstance(){
         if (singleton==null){
-            singleton=new OAuth10aService();
+//            singleton=new OAuth10aService();
         }
         return singleton;
     }

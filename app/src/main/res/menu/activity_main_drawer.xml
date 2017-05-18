@@ -12,12 +12,17 @@
             android:title="Search" />
     </group>
 
-    <item android:title="My account">
+    <item android:title="My account"
+        android:id="@+id/nav_my_account_sub1">
         <menu>
             <item
                 android:id="@+id/nav_my_timeline"
                 android:icon="@android:drawable/ic_menu_my_calendar"
                 android:title="My timeline" />
+            <item
+                android:id="@+id/nav_log_in"
+                android:icon="@android:drawable/ic_menu_directions"
+                android:title="Log in" />
             <item
                 android:id="@+id/nav_log_out"
                 android:icon="@android:drawable/ic_menu_revert"
@@ -25,7 +30,8 @@
         </menu>
     </item>
 
-    <item android:title="Application">
+    <item android:title="Application"
+        android:id="@+id/nav_my_account_sub2">
         <menu>
             <item
                 android:id="@+id/nav_settings"
