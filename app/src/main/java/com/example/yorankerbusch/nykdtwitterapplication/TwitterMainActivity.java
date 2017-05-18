@@ -13,6 +13,11 @@ import android.widget.Toast;
 
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.TweetListStartFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.UserPageFragment;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
 
 public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
     public static final String REQUESTED_USER = "GIVEN USER";
@@ -26,6 +31,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private static final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
 
     private FrameLayout tweetListFrameLayout;
+
+    private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,37 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    /**
+     * oAuth and Scribe
+     */
+    public void OAuth(){
+        //Get OAuth10aService instance
+        OAuth10aService service=OAuth10aService.getInstance();
+
+        //Get the request token
+        OAuth1RequestToken requestToken=service.getRequestToken();
+
+        //Making the user validate your request token
+        String url = service.getAuthorizationUrl(requestToken);
+
+        //make	the	user	go	there by webview
+        //....
+
+        //Get the access Token
+        OAuth1AccessToken accessToken = service.getAccessToken(requestToken,
+                "verifier you got from the user/callback");
+
+        //Sign request
+        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, service);
+        service.signRequest(accessToken,request);
+
+        Response response = request.send();
+        if (response.isSuccessful()) {
+            String res = response.getBody();
+            // Do something with res...
+        }
     }
 
     /**
