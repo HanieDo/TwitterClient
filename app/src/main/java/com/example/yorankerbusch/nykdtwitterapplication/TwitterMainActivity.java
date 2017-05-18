@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,7 +110,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         String url = service.getAuthorizationUrl(requestToken);
 
         //make	the	user	go	there by webview
-        //....
+        //...
 
         //Get the access Token
         OAuth1AccessToken accessToken = service.getAccessToken(requestToken,
