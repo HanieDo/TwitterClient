@@ -71,15 +71,13 @@ public class TweetListAdapter extends ArrayAdapter<Tweet> {
         holder.retweetButton.setText("" + tweet.getRetweetCount());
         holder.favouriteButton.setText("" + tweet.getFavouriteCount());
 
-        //TODO: Fix the issue where the image that should only be on the third tweet is also shown on
-        //TODO   the eighth and the thirteenth tweet in the main menu list.
-        //TODO: So far I have not found a fix for this, but I do know it has to do with this adapter,
-        //TODO   as when you go to a user with an image that shouldn't be there, it doesn't show up
-        //TODO   in that list, like it should. Maybe you can take a quick look before I ask in class?
         if (tweet.getEntities().getMedia() != null) {
             for (Media media : tweet.getEntities().getMedia()) {
                 Picasso.with(convertView.getContext()).load(media.getMediaURLHTTPS()).into(holder.tweetIV);
             }
+        }
+        else {
+            holder.tweetIV.setImageResource(0);
         }
 
         return convertView;
