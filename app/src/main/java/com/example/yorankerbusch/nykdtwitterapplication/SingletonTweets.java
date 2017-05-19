@@ -1,6 +1,7 @@
 package com.example.yorankerbusch.nykdtwitterapplication;
 
 import android.app.Application;
+import android.app.DownloadManager;
 import android.content.Context;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Entities;
@@ -12,6 +13,12 @@ import com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar.UserMe
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Metadata;
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 import com.example.yorankerbusch.nykdtwitterapplication.Model.TwitterUser;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Verb;
+import com.github.scribejava.core.oauth.OAuth10aService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +38,7 @@ public class SingletonTweets {
     private List<Tweet> tweetList;
     private List<TwitterUser> twitterUserList;
     private List<Tweet> filteredTweetList;
+    private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
 
     private SingletonTweets() {
         tweetList = new ArrayList<>();
@@ -42,6 +50,49 @@ public class SingletonTweets {
         return ourInstance;
     }
 
+    /**
+     * Method to make oAuth using ScribeJava
+     */
+    public void onAuth(){
+        BaseService baseService=new BaseService();
+        OAuth10aService service=baseService.createObject();
+
+        //Get the request token
+        try {
+            OAuthHandler handler=new OAuthHandler();
+            handler.setAuth1RequestToken(service.getRequestToken());
+            OAuth1RequestToken requestToken=handler.getAuth1RequestToken();
+
+            //Making the user validate your request token
+            String authUrl = service.getAuthorizationUrl(requestToken);
+
+            //make the    user   go there by webview
+            //...
+
+        /* The user will get a verifier code (if this is an OOB request)
+         * or you’ll receive a redirect from Twitter with the verifier and the requestToken on it
+         * (if you provided a callbackUrl) */
+
+            //Get the access Token
+            handler.setAuth1AccessToken(service.getAccessToken(requestToken, "verifier you got from the user/callback"));
+            OAuth1AccessToken accessToken=handler.getAuth1AccessToken();
+
+            //Sign request
+            handler.setAuthRequest(new OAuthRequest(Verb.GET,PROTECTED_RESOURCE_URL, service));
+            OAuthRequest request=handler.getAuthRequest();
+            service.signRequest(accessToken, request); // the access token from step 4
+
+            handler.setResponse(request.send());
+            Response response=handler.getResponse();
+            if (response.isSuccessful()) {
+                String res = response.getBody();
+                // Do something with res...
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Method to read the JSON file in the assets folder to get all the tweets, users and the rest.
      *

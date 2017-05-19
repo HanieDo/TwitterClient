@@ -7,20 +7,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.TweetListStartFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.UserPageFragment;
-import com.github.scribejava.core.model.OAuth1AccessToken;
-import com.github.scribejava.core.model.OAuth1RequestToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Verb;
 
 public class TwitterMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TweetListStartFragment.OnFragmentInteractionListener {
     public static final String REQUESTED_USER = "GIVEN USER";
@@ -34,12 +26,6 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private static final String ABOUT_FRAGMENT = "ABOUT FRAGMENT";
 
     private FrameLayout tweetListFrameLayout;
-    private NavigationView navigationView;
-    private boolean userLoggedIn = false;
-    private TextView userNameTV;
-    private TextView tagUserTV;
-
-    private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,70 +49,9 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        userNameTV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_username_nav_drawer);
-        tagUserTV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_tag_nav_drawer);
-
-        handleNavUserLogged();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-    public void handleNavUserLogged() {
-        Menu menu = navigationView.getMenu();
-
-        if (!userLoggedIn) {
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(false);
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(false);
-            menu.findItem(R.id.nav_my_account_sub2).getSubMenu().findItem(R.id.nav_settings).setVisible(false);
-
-            userNameTV.setText("TwitterGuest");
-            tagUserTV.setText("@IShouldGetAnAccount");
-
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(true);
-        }
-        else {
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(false);
-
-            userNameTV.setText("AuthenticTwitterUser");
-            tagUserTV.setText("@IAmPartOfTheClub");
-
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(true);
-            menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(true);
-            menu.findItem(R.id.nav_my_account_sub2).getSubMenu().findItem(R.id.nav_settings).setVisible(true);
-        }
-    }
-
-    /**
-     * oAuth and Scribe
-     */
-    public void OAuth(){
-        //Get OAuth10aService instance
-        OAuth10aService service=OAuth10aService.getInstance();
-
-        //Get the request token
-        OAuth1RequestToken requestToken=service.getRequestToken();
-
-        //Making the user validate your request token
-        String url = service.getAuthorizationUrl(requestToken);
-
-        //make	the	user	go	there by webview
-        //...
-
-        //Get the access Token
-        OAuth1AccessToken accessToken = service.getAccessToken(requestToken,
-                "verifier you got from the user/callback");
-
-        //Sign request
-        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, service);
-        service.signRequest(accessToken,request);
-
-        Response response = request.send();
-        if (response.isSuccessful()) {
-            String res = response.getBody();
-            // Do something with res...
-        }
-    }
-
     /**
      * Method to handle when the navigation drawer button has been pressed (which occupies the
      * back button's space)
@@ -172,8 +97,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
                 getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
                 currentFragment = TWITTER_HOME_FRAGMENT;
             }
-        }
-        else if (id == R.id.nav_search) {
+        } else if (id == R.id.nav_search) {
             if (currentFragment.equals(SEARCH_FRAGMENT)) {
                 //Do nothing, as the search fragment is already on the screen and the app will crash.
             } else {
@@ -181,34 +105,22 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             }
 
             Toast.makeText(this, "Twitter search menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_my_timeline) {
+        } else if (id == R.id.nav_my_timeline) {
             if (currentFragment.equals(MY_TIMELINE_FRAGMENT)) {
                 //Do nothing, as the my timeline fragment is already on the screen and the app will crash.
             } else {
                 //TODO: Replace the current fragment with the my timeline fragment
                 //Add bundles to send the current logged in user's data to the user page fragment.
-                UserPageFragment userPageFragment = new UserPageFragment();
-                getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), userPageFragment).commit();
+//                UserPageFragment userPageFragment = new UserPageFragment();
+//                getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), userPageFragment).commit();
             }
 
             Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_log_in) {
+        } else if (id == R.id.nav_log_out) {
             //TODO: Login and logout feature.
-            userLoggedIn = true;
-            handleNavUserLogged();
 
-            Toast.makeText(this, "You have been successfully logged in!", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_log_out) {
-            //TODO: Login and logout feature.
-            userLoggedIn = false;
-            handleNavUserLogged();
-
-            Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_settings) {
+            Toast.makeText(this, "Twitter log out feature placeholder", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_settings) {
             if (currentFragment.equals(SETTINGS_FRAGMENT)) {
                 //Do nothing, as the settings fragment is already on the screen and the app will crash.
             } else {
@@ -216,8 +128,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             }
 
             Toast.makeText(this, "Twitter settings menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_about) {
             if (currentFragment.equals(ABOUT_FRAGMENT)) {
                 //Do nothing, as the about fragment is already on the screen and the app will crash.
             } else {
