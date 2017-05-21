@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yorankerbusch.nykdtwitterapplication.fragments.OAuthWebViewFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.TweetListStartFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.UserPageFragment;
 
@@ -22,6 +23,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private static String currentFragment = "NULL";
     private static final String TWITTER_HOME_FRAGMENT = "HOME FRAGMENT";
     private static final String SEARCH_FRAGMENT = "SEARCH FRAGMENT";
+    private static final String LOG_IN_FRAGMENT = "LOG IN FRAGMENT";
     private static final String MY_TIMELINE_FRAGMENT = "MY TIMELINE FRAGMENT";
     private static final String OTHER_TIMELINE_FRAGMENT = "OTHER TIMELINE FRAGMENT";
     private static final String SETTINGS_FRAGMENT = "SETTINGS FRAGMENT";
@@ -29,7 +31,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
     private FrameLayout tweetListFrameLayout;
     private NavigationView navigationView;
-    private boolean userLoggedIn = false;
+    private boolean userWantsToLog = false;
     private TextView userNameTV;
     private TextView tagUserTV;
 
@@ -84,8 +86,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
                 getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
                 currentFragment = TWITTER_HOME_FRAGMENT;
             }
-        }
-        else if (id == R.id.nav_search) {
+        } else if (id == R.id.nav_search) {
             if (currentFragment.equals(SEARCH_FRAGMENT)) {
                 //Do nothing, as the search fragment is already on the screen and the app will crash.
             } else {
@@ -93,8 +94,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             }
 
             Toast.makeText(this, "Twitter search menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_my_timeline) {
+        } else if (id == R.id.nav_my_timeline) {
             if (currentFragment.equals(MY_TIMELINE_FRAGMENT)) {
                 //Do nothing, as the my timeline fragment is already on the screen and the app will crash.
             } else {
@@ -105,22 +105,15 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             }
 
             Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_log_in) {
+        } else if (id == R.id.nav_log_in) {
             //TODO: Login and logout feature.
-            userLoggedIn = true;
+            userWantsToLog = true;
             handleNavUserLogged();
-
-            Toast.makeText(this, "You have been successfully logged in!", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_log_out) {
+        } else if (id == R.id.nav_log_out) {
             //TODO: Login and logout feature.
-            userLoggedIn = false;
+            userWantsToLog = false;
             handleNavUserLogged();
-
-            Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_settings) {
             if (currentFragment.equals(SETTINGS_FRAGMENT)) {
                 //Do nothing, as the settings fragment is already on the screen and the app will crash.
             } else {
@@ -128,8 +121,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             }
 
             Toast.makeText(this, "Twitter settings menu option placeholder", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_about) {
             if (currentFragment.equals(ABOUT_FRAGMENT)) {
                 //Do nothing, as the about fragment is already on the screen and the app will crash.
             } else {
@@ -148,7 +140,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     public void handleNavUserLogged() {
         Menu menu = navigationView.getMenu();
 
-        if (!userLoggedIn) {
+        if (!userWantsToLog) {
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(false);
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(false);
             menu.findItem(R.id.nav_my_account_sub2).getSubMenu().findItem(R.id.nav_settings).setVisible(false);
@@ -157,16 +149,34 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             tagUserTV.setText("@IShouldGetAnAccount");
 
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(true);
-        }
-        else {
+            Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show();
+        } else {
+            //Display the OAuth web view fragment so the user can log in using actual Twitter
+            OAuthWebViewFragment oAuthWebViewFragment = new OAuthWebViewFragment();
+            getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), oAuthWebViewFragment).commit();
+            currentFragment = LOG_IN_FRAGMENT;
+
+//            if (correctUser == true) {
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(false);
 
+            //Change these to the retrieved user's name and tag.
             userNameTV.setText("AuthenticTwitterUser");
             tagUserTV.setText("@IAmPartOfTheClub");
 
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(true);
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(true);
             menu.findItem(R.id.nav_my_account_sub2).getSubMenu().findItem(R.id.nav_settings).setVisible(true);
+
+//            Toast.makeText(this, "You have been successfully logged in!", Toast.LENGTH_SHORT).show();
+//            } else {
+//                //Notify the user that their login attempt failed.
+//                Toast.makeText(this, "Login attempt failed - We could not log you in!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            //Regardless of if the user failed or succeeded to log in, return to the main tweet menu.
+//            TweetListStartFragment tweetListStartFragment = new TweetListStartFragment();
+//            getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), tweetListStartFragment).commit();
+//            currentFragment = TWITTER_HOME_FRAGMENT;
         }
     }
 

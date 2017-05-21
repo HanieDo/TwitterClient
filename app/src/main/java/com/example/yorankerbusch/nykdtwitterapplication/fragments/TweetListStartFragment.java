@@ -43,7 +43,7 @@ public class TweetListStartFragment extends Fragment {
     }
 
     /**
-     * Standard method to check if another activity implementing the OnFragmentInteractionListener
+     * Standard method to check if another activity implementing the AuthenticationFragmentListener
      *  also implements the method and vice versa. If yes, set the listener.
      *
      * @param context is the context of the activity using the interface.
@@ -55,7 +55,7 @@ public class TweetListStartFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement AuthenticationFragmentListener");
         }
     }
 
