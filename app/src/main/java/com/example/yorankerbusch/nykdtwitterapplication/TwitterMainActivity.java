@@ -1,5 +1,6 @@
 package com.example.yorankerbusch.nykdtwitterapplication;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -65,6 +66,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
         handleNavUserLogged();
         navigationView.setNavigationItemSelectedListener(this);
+
+        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
     }
 
     /**

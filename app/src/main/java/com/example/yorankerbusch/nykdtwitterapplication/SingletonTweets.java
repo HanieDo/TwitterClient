@@ -1,7 +1,5 @@
 package com.example.yorankerbusch.nykdtwitterapplication;
 
-import android.app.Application;
-import android.app.DownloadManager;
 import android.content.Context;
 
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Entities;
@@ -17,6 +15,7 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.model.Token;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
@@ -38,7 +37,7 @@ public class SingletonTweets {
     private List<Tweet> tweetList;
     private List<TwitterUser> twitterUserList;
     private List<Tweet> filteredTweetList;
-    private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
+
 
     private SingletonTweets() {
         tweetList = new ArrayList<>();
@@ -55,16 +54,11 @@ public class SingletonTweets {
      */
     public void onAuth(){
         BaseService baseService=new BaseService();
-        OAuth10aService service=baseService.createObject();
 
-        //Get the request token
         try {
-            OAuthHandler handler=new OAuthHandler();
-            handler.setAuth1RequestToken(service.getRequestToken());
-            OAuth1RequestToken requestToken=handler.getAuth1RequestToken();
-
+            OAuthHandler handler=new OAuthHandler(baseService);
             //Making the user validate your request token
-            String authUrl = service.getAuthorizationUrl(requestToken);
+            String authUrl = handler.getAuthorizationUrl(handler.getRequestToken());
 
             //make the    user   go there by webview
             //...
@@ -73,16 +67,9 @@ public class SingletonTweets {
          * or you’ll receive a redirect from Twitter with the verifier and the requestToken on it
          * (if you provided a callbackUrl) */
 
-            //Get the access Token
-            handler.setAuth1AccessToken(service.getAccessToken(requestToken, "verifier you got from the user/callback"));
-            OAuth1AccessToken accessToken=handler.getAuth1AccessToken();
-
             //Sign request
-            handler.setAuthRequest(new OAuthRequest(Verb.GET,PROTECTED_RESOURCE_URL, service));
-            OAuthRequest request=handler.getAuthRequest();
-            service.signRequest(accessToken, request); // the access token from step 4
+            handler.signRequest();
 
-            handler.setResponse(request.send());
             Response response=handler.getResponse();
             if (response.isSuccessful()) {
                 String res = response.getBody();
