@@ -1,6 +1,5 @@
 package com.example.yorankerbusch.nykdtwitterapplication;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +33,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private FrameLayout tweetListFrameLayout;
     private NavigationView navigationView;
     private boolean userWantsToLog = false;
-    private TextView userNameTV;
-    private TextView tagUserTV;
+    private TextView userNameTV, tagUserTV;
+    private ImageView imageUser;
 
     private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
 
@@ -63,11 +63,10 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         userNameTV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_username_nav_drawer);
         tagUserTV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_tag_nav_drawer);
+        imageUser = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_user_iv);
 
         handleNavUserLogged();
         navigationView.setNavigationItemSelectedListener(this);
-
-        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
     }
 
     /**
@@ -109,11 +108,11 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
             Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_log_in) {
-            //TODO: Login and logout feature.
+            //TODO: Login feature.
             userWantsToLog = true;
             handleNavUserLogged();
         } else if (id == R.id.nav_log_out) {
-            //TODO: Login and logout feature.
+            //TODO: Logout feature.
             userWantsToLog = false;
             handleNavUserLogged();
         } else if (id == R.id.nav_settings) {
@@ -150,6 +149,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
             userNameTV.setText("TwitterGuest");
             tagUserTV.setText("@IShouldGetAnAccount");
+            imageUser.setImageResource(R.mipmap.ic_launcher_round);
 
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(true);
             Toast.makeText(this, "You have been logged out.", Toast.LENGTH_SHORT).show();
@@ -162,9 +162,10 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 //            if (correctUser == true) {
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(false);
 
-            //Change these to the retrieved user's name and tag.
+            //Change these to the retrieved user's name, tag and image.
             userNameTV.setText("AuthenticTwitterUser");
             tagUserTV.setText("@IAmPartOfTheClub");
+            imageUser.setImageResource(R.mipmap.ic_launcher_round);
 
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(true);
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(true);
