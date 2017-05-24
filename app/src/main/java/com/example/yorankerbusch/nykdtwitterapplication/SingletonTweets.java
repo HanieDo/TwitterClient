@@ -11,13 +11,6 @@ import com.example.yorankerbusch.nykdtwitterapplication.Model.EntitiesVar.UserMe
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Metadata;
 import com.example.yorankerbusch.nykdtwitterapplication.Model.Tweet;
 import com.example.yorankerbusch.nykdtwitterapplication.Model.TwitterUser;
-import com.github.scribejava.core.model.OAuth1AccessToken;
-import com.github.scribejava.core.model.OAuth1RequestToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Token;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth10aService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,37 +42,6 @@ public class SingletonTweets {
         return ourInstance;
     }
 
-    /**
-     * Method to make oAuth using ScribeJava
-     */
-    public void onAuth(){
-        BaseService baseService=new BaseService();
-
-        try {
-            OAuthHandler handler=new OAuthHandler(baseService);
-            //Making the user validate your request token
-            String authUrl = handler.getAuthorizationUrl(handler.getRequestToken());
-
-            //make the    user   go there by webview
-            //...
-
-        /* The user will get a verifier code (if this is an OOB request)
-         * or you’ll receive a redirect from Twitter with the verifier and the requestToken on it
-         * (if you provided a callbackUrl) */
-
-            //Sign request
-            handler.signRequest();
-
-            Response response=handler.getResponse();
-            if (response.isSuccessful()) {
-                String res = response.getBody();
-                // Do something with res...
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     /**
      * Method to read the JSON file in the assets folder to get all the tweets, users and the rest.
      *

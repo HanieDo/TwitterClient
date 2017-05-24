@@ -10,6 +10,7 @@ import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by LENOVO on 5/18/2017.
@@ -45,10 +46,40 @@ public class OAuthHandler {
 
     public OAuth1RequestToken getRequestToken() {
         try {
-            return requestToken = service.getRequestToken();
-        } catch (IOException e) {
+            OAuth1RequestToken oAuth1RequestToken = new AuthURL().execute().get();
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
+        }
+        catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private class AuthURL extends AsyncTask<String, Boolean, OAuth1RequestToken> {
+        @Override
+        protected OAuth1RequestToken doInBackground(String... params) {
+            try {
+                return requestToken = service.getRequestToken();
+                //TODO: THE FCK IS THIS
+//                publishProgress(...);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Boolean... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(OAuth1RequestToken oAuth1RequestToken) {
+            super.onPostExecute(oAuth1RequestToken);
         }
     }
 

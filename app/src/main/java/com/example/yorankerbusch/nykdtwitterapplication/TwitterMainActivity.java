@@ -17,14 +17,6 @@ import android.widget.Toast;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.OAuthWebViewFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.TweetListStartFragment;
 import com.example.yorankerbusch.nykdtwitterapplication.fragments.UserPageFragment;
-import com.github.scribejava.apis.TwitterApi;
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth1AccessToken;
-import com.github.scribejava.core.model.OAuth1RequestToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.io.IOException;
 
@@ -45,12 +37,6 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
     private boolean userWantsToLog = false;
     private TextView userNameTV, tagUserTV;
     private ImageView imageUser;
-
-    final OAuth10aService service = new ServiceBuilder()
-            .apiKey(Constants.API_KEY)
-            .apiSecret(Constants.API_SECRET)
-            .callback(Constants.CALLBACKURL)
-            .build(TwitterApi.instance());
 
     private static final String PROTECTED_RESOURCE_URL = "https://api.twitter.com/1.1/account/verify_credentials.json";
 
@@ -81,6 +67,8 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         tagUserTV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_tag_nav_drawer);
         imageUser = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_user_iv);
 
+        //TODO: Change this, as OAuth users who close and start the app again will be logged out upon
+        //TODO   the second startup.
         try {
             handleNavUserLogged();
         } catch (IOException e) {
@@ -128,15 +116,19 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
 
             Toast.makeText(this, "My timeline menu option placeholder", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_log_in) {
-            userWantsToLog = true;
+            if (currentFragment == LOG_IN_FRAGMENT) {
+                //Do nothing, as the login fragment is already on screen.
+            }
+            else {
+                userWantsToLog = true;
 
-            try {
-                handleNavUserLogged();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    handleNavUserLogged();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else if (id == R.id.nav_log_out) {
-            //TODO: Logout feature.
             userWantsToLog = false;
 
             try {
@@ -172,6 +164,7 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
         Menu menu = navigationView.getMenu();
 
         if (!userWantsToLog) {
+            //TODO: Logout feature, delete the OAuth logged in user's information and the like.
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_out).setVisible(false);
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_my_timeline).setVisible(false);
             menu.findItem(R.id.nav_my_account_sub2).getSubMenu().findItem(R.id.nav_settings).setVisible(false);
@@ -188,23 +181,14 @@ public class TwitterMainActivity extends AppCompatActivity implements Navigation
             getSupportFragmentManager().beginTransaction().replace(tweetListFrameLayout.getId(), oAuthWebViewFragment).commit();
             currentFragment = LOG_IN_FRAGMENT;
 
-            //TODO: Issue here, the website it tries to connect to does not exist, this is the one:
-            // https://api.twitter.com/oauth/request_token
-            final OAuth1RequestToken requestToken = service.getRequestToken();
-
-            String authUrl = service.getAuthorizationUrl(requestToken);
-
-            final OAuth1AccessToken accessToken = service.getAccessToken(requestToken, authUrl);
-
-            final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, service);
-            service.signRequest(accessToken, request); // the access token from step 4
-            final Response response = request.send();
-            System.out.println(response.getBody());
+            //TODO
+            //TODO: OAuth handling has to start here!
+            //TODO
 
 //            if (correctUser == true) {
             menu.findItem(R.id.nav_my_account_sub1).getSubMenu().findItem(R.id.nav_log_in).setVisible(false);
 
-            //Change these to the retrieved user's name, tag and image.
+            //TODO: Change these to the retrieved user's name, tag and image.
             userNameTV.setText("AuthenticTwitterUser");
             tagUserTV.setText("@IAmPartOfTheClub");
             imageUser.setImageResource(R.mipmap.ic_launcher_round);
